@@ -255,7 +255,7 @@ const Pets = () => {
                                 breed={pet.breed}
                                 age={pet.age}
                                 adoption_status={pet.adoption_status}
-                                image={pet.image}
+                                image={pet.imageUrl}
                                 onEdit={() => handleEditPet(pet)}
                             />
                         </Grid>

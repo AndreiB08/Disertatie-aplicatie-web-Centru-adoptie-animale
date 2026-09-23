@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import "./config/firebase.js";
 import { synchronizeDatabase } from "./config/database.js";
 import { router as indexRouter } from "./routes/index.js";
 import { runAllSeeds } from "./seeds/runAllSeeds.js";
