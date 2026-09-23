@@ -6,3 +6,6 @@ storage.db
 
 # Node modules
 node_modules
+
+# Firebase
+firebase-service-account.json
