@@ -1,0 +1,50 @@
+.contact-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-title {
+  margin-bottom: 20px !important;
+  text-align: center;
+  font-weight: bold !important;
+  font-size: 2.5rem !important;
+}
+
+.contact-description {
+  text-align: center;
+  margin-bottom: 30px !important;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.contact-form button {
+  padding: 12px;
+  background-color: #009688;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #00796b;
+}
+
+.contact-info {
+  text-align: center;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}

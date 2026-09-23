@@ -1,0 +1,142 @@
+@import url("./colors.css");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  text-align: justify;
+  font-size: 18px;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  padding: 90px 15px 10px;
+  gap: 10px;
+  position: relative;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-titlu);
+  text-align: center;
+}
+
+.btn {
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  align-items: center;
+  display: inline-block;
+  width: auto;
+  max-width: fit-content;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.btn-neutral {
+  background-color: var(--color-neutral);
+}
+
+.btn-neutral:hover {
+  background-color: var(--color-neutral-hover);
+}
+
+
+
+.btn-delete {
+  background-color: var(--color-red);
+}
+
+.btn-delete:hover {
+  background-color: var(--color-red-hover);
+}
+
+.btn-edit {
+  background-color: var(--color-cyan);
+}
+
+.btn-edit {
+  background-color: var(--color-cyan-hover);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-titlu);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+p {
+  color: var(--color-text);
+  font-size: 1rem;
+  margin-bottom: 1em;
+  text-align: justify;
+}
+
+@media (max-width: 768px) {
+
+  html,
+  body {
+    font-size: 16px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}

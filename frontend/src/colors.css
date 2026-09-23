@@ -1,0 +1,23 @@
+:root {
+    --color-background: #f5f5f5;
+    --color-text: #1c2024;
+    --color-titlu: #1E2749;
+
+    --color-primary: #437f83;
+    --color-primary-hover: #036f68;
+    --color-secondary: #e0b07a;
+    --color-secondary-hover: #c08f57;
+    --color-neutral: #d8c142;
+    --color-neutral-hover: #b8a22e;
+
+    --color-red: #d30707;
+    --color-red-hover: #e50808;
+    --color-green: #008000;
+    --color-green-hover: #009400;
+    --color-yellow: #d8c142;
+
+    --color-cyan: #12a59b;
+    --color-cyan-hover: #18cbbf;
+
+    --color-pet-card: #e9ebec;
+}

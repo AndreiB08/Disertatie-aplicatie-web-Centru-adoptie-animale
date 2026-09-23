@@ -1,0 +1,38 @@
+.privacy-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.8;
+    background-color: #fff;
+}
+
+.privacy-container h1 {
+    font-size: 36px;
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.privacy-container h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: var(--color-primary);
+}
+
+.privacy-container ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.privacy-container ul li {
+    margin-bottom: 8px;
+}
+
+.updated-date {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 40px;
+    color: #666;
+}

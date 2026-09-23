@@ -1,0 +1,107 @@
+.about {
+    margin: 0 10px;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: flex-start;
+    position: relative;
+}
+
+.info {
+    flex: 1 1 60%;
+    transition: all 0.3s ease;
+
+}
+
+.about-hero {
+    margin-left: 450px;
+}
+
+#rescue h2 {
+    margin-left: 450px;
+    text-align: center;
+}
+
+.intro-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.about-hero {
+    flex: 1;
+    max-width: 500px;
+    border-radius: 12px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.section {
+    margin-bottom: 60px;
+}
+
+.section h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.section-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+}
+
+.about img {
+    width: 324px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.section-content p {
+    flex: 1;
+    min-width: 280px;
+    line-height: 1.6;
+    font-size: 18px;
+}
+
+.section-content.reverse {
+    flex-direction: row-reverse;
+}
+
+.statistics {
+    flex: 1 1 35%;
+    max-width: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-self: flex-start;
+}
+
+.stat-box {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stat-box h3 {
+    font-size: 32px;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.stat-box p {
+    font-size: 15px;
+    color: #666;
+}

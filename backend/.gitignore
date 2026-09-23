@@ -1,0 +1,8 @@
+# Baza de date
+storage.db
+
+# Variabile de mediu
+.env
+
+# Node modules
+node_modules

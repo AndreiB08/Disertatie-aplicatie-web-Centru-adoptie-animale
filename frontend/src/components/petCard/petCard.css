@@ -1,0 +1,36 @@
+.pet-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.pet-card:hover {
+    transform: scale(1.05);
+}
+
+.status {
+    text-align: left;
+    padding-top: 10px;
+}
+
+.status-available {
+    color: var(--color-green);
+}
+
+.status-adopted {
+    color: var(--color-red);
+}
+
+.image-adopted {
+    background-color: #d3d3d3;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.status-reserved {
+    color: var(--color-yellow);
+}
+
+.image-reserved {
+    background-color: #d3d3d3;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}

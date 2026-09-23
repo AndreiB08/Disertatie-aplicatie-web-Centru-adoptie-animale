@@ -1,0 +1,60 @@
+.back-button {
+    background-color: transparent;
+    border: none;
+    padding: 12px 24px;
+    color: var(--color-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+.pet-content {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 75px;
+}
+
+.image-container {
+    width: 800px;
+    height: 600px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.pet-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pet-info {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    max-height: 600px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.pet-info h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.pet-info p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: var(--color-text);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
