@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import "./config/firebase.js";
-import { synchronizeDatabase } from "./config/database.js";
 import { router as indexRouter } from "./routes/index.js";
 
 dotenv.config();
@@ -23,9 +22,6 @@ app.use("/", indexRouter);
 const startServer = async () => {
     try {
         console.log("Starting server...");
-
-        await synchronizeDatabase();
-        console.log("Database synchronized successfully.");
 
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}...`);
