@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../../constants/server_url";
-import { ADOPTION_STATUSES } from "../../../../backend/src/constants/enums";
 import { lowercase, capitalizeWords } from "../../utils/formHelpers";
 const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
 
@@ -131,10 +130,6 @@ const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
                     animalId,
                 });
 
-
-                await axios.put(`${SERVER_URL}/pets/${animalId}`, {
-                    adoption_status: ADOPTION_STATUSES.REZERVAT
-                });
             }
 
             setFormData(initialForm);

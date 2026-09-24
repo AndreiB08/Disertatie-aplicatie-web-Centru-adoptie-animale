@@ -29,7 +29,7 @@ const PetDetails = () => {
                 }
 
                 setPet(data);
-                setSelectedImage(data.image);
+                setSelectedImage(data.imageUrl);
             } catch (err) {
                 console.error("Error fetching pet details: ", err);
                 navigate("*", { replace: true });

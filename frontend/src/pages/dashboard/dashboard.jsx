@@ -112,14 +112,14 @@ const Dashboard = () => {
             const request = requests.find(req => req.id === requestId);
             if (!request) return;
 
-            await axios.put(`${SERVER_URL}/pets/${request.animalId}`, {
-                adoption_status: ADOPTION_STATUSES.ADOPTAT
-            });
-
             await axios.put(
                 `${SERVER_URL}/adoption-requests/${requestId}`,
                 { approved: true },
-                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
             );
 
             const updatedStats = await fetchStats();
@@ -132,23 +132,24 @@ const Dashboard = () => {
 
     const handleReject = async (id) => {
         try {
+            const request = requests.find(req => req.id === id);
+
             await axios.delete(`${SERVER_URL}/adoption-requests/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
 
-            const request = requests.find(req => req.id === id);
             if (request?.animalId) {
-                await axios.put(`${SERVER_URL}/pets/${request.animalId}`, {
-                    adoption_status: ADOPTION_STATUSES.DISPONIBIL
-                });
-
-                await axios.post(`${SERVER_URL}/notify-requests/notify-availability`, { animalId: request.animalId }, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                });
+                await axios.post(
+                    `${SERVER_URL}/notify-requests/notify-availability`,
+                    { animalId: request.animalId },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        },
+                    }
+                );
             }
 
             const updatedStats = await fetchStats();
