@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import "./config/firebase.js";
 import { synchronizeDatabase } from "./config/database.js";
 import { router as indexRouter } from "./routes/index.js";
-import { runAllSeeds } from "./seeds/runAllSeeds.js";
 import "./models/associations.js";
 
 dotenv.config();
@@ -28,9 +27,6 @@ const startServer = async () => {
 
         await synchronizeDatabase();
         console.log("Database synchronized successfully.");
-
-        await runAllSeeds();
-        console.log("Seeds complete.");
 
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}...`);

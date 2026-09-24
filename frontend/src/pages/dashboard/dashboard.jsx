@@ -31,7 +31,7 @@ const Dashboard = () => {
 
             const unapproved = res.data
                 .filter(req => req.approved === false)
-                .sort((a, b) => new Date(a.pickupDateTime) - new Date(b.pickupDateTime));
+                .sort((a, b) => new Date(a.pickup_datetime) - new Date(b.pickup_datetime));
             setRequests(unapproved);
         } catch (err) {
             console.error("Eroare la preluarea cererilor:", err);
