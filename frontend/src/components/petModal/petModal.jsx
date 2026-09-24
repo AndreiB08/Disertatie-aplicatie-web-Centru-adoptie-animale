@@ -4,7 +4,7 @@ import {
     Dialog, DialogTitle, DialogContent, DialogActions,
     TextField, Button, Select, MenuItem, InputLabel, FormControl, FormHelperText
 } from "@mui/material";
-import { formatAnimalData, validateAnimalData } from "../../utils/formHelpers";
+import { validateAnimalData } from "../../utils/formHelpers";
 import { SPECIES, GENDERS, SIZES, HEALTH_STATUSES, ADOPTION_STATUSES } from "../../../../backend/src/constants/enums";
 import { SERVER_URL } from "../../constants/server_url.js";
 
@@ -40,8 +40,15 @@ const PetModal = ({ open, handleClose, onSaved, initialData = null }) => {
     }, [initialData]);
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const finalValue = type === "checkbox" ? checked : value;
+        const { name, value, type, checked, files } = e.target;
+
+        let finalValue = value;
+
+        if (type === "checkbox") {
+            finalValue = checked;
+        } else if (type === "file") {
+            finalValue = files[0] || null;
+        }
 
         setForm((prev) => ({
             ...prev,
@@ -56,23 +63,56 @@ const PetModal = ({ open, handleClose, onSaved, initialData = null }) => {
 
     const handleSubmit = async () => {
         const newErrors = validateAnimalData(form);
+
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
         }
 
         try {
-            const formattedData = formatAnimalData(form);
+            const formData = new FormData();
+
+            formData.append("name", form.name);
+            formData.append("species", form.species);
+            formData.append("breed", form.breed);
+            formData.append("age", form.age);
+            formData.append("gender", form.gender);
+            formData.append("size", form.size);
+            formData.append("color", form.color);
+            formData.append("health_status", form.health_status);
+            formData.append("vaccinated", form.vaccinated);
+            formData.append("sterilized", form.sterilized);
+            formData.append("adoption_status", form.adoption_status);
+            formData.append("arrival_date", form.arrival_date);
+            formData.append("notes", form.notes);
+            formData.append("microchip_number", form.microchip_number || "");
+
+            if (form.image instanceof File) {
+                formData.append("image", form.image);
+            }
+
             const token = localStorage.getItem("token");
 
             if (initialData && initialData.id) {
-                await axios.put(`${SERVER_URL}/pets/${initialData.id}`, formattedData, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                await axios.put(
+                    `${SERVER_URL}/pets/${initialData.id}`,
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
             } else {
-                await axios.post(`${SERVER_URL}/pets`, formattedData, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                await axios.post(
+                    `${SERVER_URL}/pets`,
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
             }
 
             onSaved();
@@ -83,6 +123,7 @@ const PetModal = ({ open, handleClose, onSaved, initialData = null }) => {
             if (err.response) {
                 console.error("Răspuns de la server:", err.response.data);
             }
+
             console.error("Eroare la salvare animal:", err);
             alert("Eroare la salvare.");
         }
@@ -190,8 +231,22 @@ const PetModal = ({ open, handleClose, onSaved, initialData = null }) => {
                 <TextField label="Data sosirii" name="arrival_date" type="date" value={form.arrival_date} onChange={handleChange} InputLabelProps={{ shrink: true }} error={!!errors.arrival_date} helperText={errors.arrival_date} fullWidth />
 
                 <TextField label="Descriere" name="notes" value={form.notes} onChange={handleChange} fullWidth multiline rows={3} />
-                <TextField label="URL poză" name="image" value={form.image} onChange={handleChange} error={!!errors.image} helperText={errors.image} fullWidth />
+                <Button variant="outlined" component="label"
+                >Alege imaginea
+                    <input type="file" accept="image/jpeg,image/png,image/webp" hidden name="image" onChange={handleChange} />
+                </Button>
 
+                {form.image && (
+                    <span>
+                        {form.image.name}
+                    </span>
+                )}
+
+                {errors.image && (
+                    <FormHelperText error>
+                        {errors.image}
+                    </FormHelperText>
+                )}
                 <TextField label="Număr microcip" name="microchip_number" value={form.microchip_number} onChange={handleChange} error={!!errors.microchip_number} helperText={errors.microchip_number} fullWidth />
 
                 <label>

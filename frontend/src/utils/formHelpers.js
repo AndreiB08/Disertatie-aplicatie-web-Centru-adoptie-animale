@@ -51,7 +51,7 @@ export const validateAnimalData = (data = {}) => {
   if (isEmpty(data.health_status)) errors.health_status = "Starea medicală este obligatorie.";
   if (isEmpty(data.adoption_status)) errors.adoption_status = "Statusul de adopție este obligatoriu.";
   if (isEmpty(data.arrival_date)) errors.arrival_date = "Data sosirii este obligatorie.";
-  if (isEmpty(data.image)) errors.image = "URL-ul imaginii este obligatoriu.";
+  if (!data.image) errors.image = "Imaginea este obligatorie.";
 
   if (
     data.microchip_number &&

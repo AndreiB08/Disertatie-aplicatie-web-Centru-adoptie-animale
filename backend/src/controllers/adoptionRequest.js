@@ -88,7 +88,6 @@ export const addAdoptionRequest = async (req, res) => {
         const requestRef = adoptionRequestsCollection.doc(uuidv4());
 
         const newRequest = {
-            id: requestRef.id,
             adopter_first_name: adopter_first_name.trim(),
             adopter_last_name: adopter_last_name.trim(),
             adopter_email: email,
