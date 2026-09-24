@@ -36,7 +36,7 @@ export const formatAnimalData = (data = {}) => ({
     data.microchip_number?.trim() === "" ? null : data.microchip_number,
 });
 
-export const validateAnimalData = (data = {}) => {
+export const validateAnimalData = (data = {}, isEditing = false) => {
   const errors = {};
   const isEmpty = (value) => !value || value.trim() === "";
 
@@ -48,16 +48,22 @@ export const validateAnimalData = (data = {}) => {
   if (isEmpty(data.gender)) errors.gender = "Genul este obligatoriu.";
   if (isEmpty(data.size)) errors.size = "Dimensiunea este obligatorie.";
   if (isEmpty(data.color)) errors.color = "Culoarea este obligatorie.";
-  if (isEmpty(data.health_status)) errors.health_status = "Starea medicală este obligatorie.";
-  if (isEmpty(data.adoption_status)) errors.adoption_status = "Statusul de adopție este obligatoriu.";
-  if (isEmpty(data.arrival_date)) errors.arrival_date = "Data sosirii este obligatorie.";
-  if (!data.image) errors.image = "Imaginea este obligatorie.";
+  if (isEmpty(data.health_status))
+    errors.health_status = "Starea medicală este obligatorie.";
+  if (isEmpty(data.adoption_status))
+    errors.adoption_status = "Statusul de adopție este obligatoriu.";
+  if (isEmpty(data.arrival_date))
+    errors.arrival_date = "Data sosirii este obligatorie.";
+
+  if (!isEditing && !data.image)
+    errors.image = "Imaginea este obligatorie.";
 
   if (
     data.microchip_number &&
     !/^\d{15}$/.test(data.microchip_number.trim())
   ) {
-    errors.microchip_number = "Numărul de microcip trebuie să aibă exact 15 cifre.";
+    errors.microchip_number =
+      "Numărul de microcip trebuie să aibă exact 15 cifre.";
   }
 
   return errors;

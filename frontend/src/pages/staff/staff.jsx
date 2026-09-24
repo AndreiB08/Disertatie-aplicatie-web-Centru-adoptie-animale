@@ -86,7 +86,7 @@ const Staff = () => {
                 return;
             }
 
-            const confirm = window.confirm("Ești sigur că vrei să ștergi acest");
+            const confirm = window.confirm("Ești sigur că vrei să ștergi acest angajat?");
             if (!confirm) return;
 
             await axios.delete(`${SERVER_URL}/employees/${id}`, {

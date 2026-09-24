@@ -62,7 +62,10 @@ const PetModal = ({ open, handleClose, onSaved, initialData = null }) => {
     };
 
     const handleSubmit = async () => {
-        const newErrors = validateAnimalData(form);
+        const newErrors = validateAnimalData(
+            form,
+            Boolean(initialData?.id)
+        );
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
