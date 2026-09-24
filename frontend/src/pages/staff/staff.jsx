@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import StaffModal from "../../components/staffModal/staffModal";
@@ -28,11 +28,11 @@ const Staff = () => {
         }
 
         fetchEmployees();
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         applyFilters();
-    }, [nameFilter, emailFilter, roleFilter, employees]);
+    }, [applyFilters]);
 
     const fetchEmployees = () => {
         const token = localStorage.getItem("token");
@@ -79,7 +79,7 @@ const Staff = () => {
         }
     };
 
-    const applyFilters = () => {
+    const applyFilters = useCallback(() => {
         let result = employees;
 
         if (nameFilter) {
@@ -100,7 +100,7 @@ const Staff = () => {
 
         setPage(1);
         setFiltered(result);
-    };
+    }, [employees, nameFilter, emailFilter, roleFilter]);
 
     const handleResetFilters = () => {
         setNameFilter("");

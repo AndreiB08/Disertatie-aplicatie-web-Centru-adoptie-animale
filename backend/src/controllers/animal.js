@@ -157,6 +157,8 @@ export const addAnimal = async (req, res) => {
 
         const image = await uploadImage(req.file, id);
 
+        const now = new Date().toISOString();
+
         const animalData = {
             name: animal.name,
             species: animal.species,
@@ -183,8 +185,8 @@ export const addAnimal = async (req, res) => {
             imageUrl: image.imageUrl,
             imagePath: image.imagePath,
 
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
+            createdAt: now,
+            updatedAt: now
         };
 
         await animalsCollection.doc(id).set(animalData);

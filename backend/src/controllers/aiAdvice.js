@@ -12,11 +12,6 @@ export const getPetCareAdvice = async (req, res) => {
     }
 
     try {
-        // TEMPORAR:
-        // const aiResponse = `Mock răspuns pentru mesaj (mă costă bani sunt sărăcie): "${message}"`;
-        // res.json({ advice: aiResponse });
-
-        // ORIGINAL:
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: message }],

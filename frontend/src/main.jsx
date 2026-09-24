@@ -16,5 +16,3 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
-
-console.log("React app successfully mounted.");

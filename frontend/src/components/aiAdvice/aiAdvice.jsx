@@ -17,7 +17,7 @@ function AIAdvice({ onClose }) {
     try {
       const res = await axios.post(`${SERVER_URL}/api/ai/advice`, { message });
       setResponse(res.data.advice);
-    } catch (err) {
+    } catch {
       setResponse("Eroare la obținerea răspunsului.");
     }
 

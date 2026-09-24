@@ -1,4 +1,3 @@
-import React from 'react';
 import './location.css';
 
 const LocationPage = () => {

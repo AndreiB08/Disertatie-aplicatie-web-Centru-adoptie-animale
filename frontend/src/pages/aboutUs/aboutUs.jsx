@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { SERVER_URL } from "../../constants/server_url";
 import axios from "axios";

@@ -110,20 +110,6 @@
     background-color: var(--color-red-hover);
 }
 
-.piechart {
-    background: #ffffff;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    flex: 1;
-}
-
-.piechart h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    color: var(--color-primary);
-}
-
 .contact-messages {
     background: #ffffff;
     padding: 1rem;

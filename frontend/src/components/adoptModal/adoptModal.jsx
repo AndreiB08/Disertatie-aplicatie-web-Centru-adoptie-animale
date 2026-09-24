@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import {
     Dialog,
@@ -26,7 +26,6 @@ const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
 
     const [formData, setFormData] = useState(initialForm);
     const [errors, setErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     const validate = () => {
@@ -52,7 +51,7 @@ const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
             if (!formData.adopter_last_name?.trim()) {
                 newErrors.adopter_last_name = "Numele este obligatoriu.";
             }
-            const phoneRegex = /^[0-9+\-\(\)\s]*$/;
+            const phoneRegex = /^[0-9()+\-\s]*$/;
 
             if (!formData.adopter_phone_number?.trim()) {
                 newErrors.adopter_phone_number = "Numărul de telefon este obligatoriu.";
@@ -97,12 +96,10 @@ const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
 
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setIsSubmitting(false);
             return;
         }
 

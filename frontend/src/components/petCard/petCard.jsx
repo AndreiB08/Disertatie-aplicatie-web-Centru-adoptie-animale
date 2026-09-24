@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -38,10 +38,6 @@ const formatAdoptionStatus = (status) => {
     }
 };
 
-const getCardClass = (status) => {
-    return `pet-card${status === 'reserved' ? ' reserved-card' : ''}`;
-}
-
 const PetCard = ({ id, name, species, breed, age, adoption_status, image, onEdit }) => {
     const navigate = useNavigate();
     const [openNotifyModal, setOpenNotifyModal] = useState(false);
@@ -79,7 +75,7 @@ const PetCard = ({ id, name, species, breed, age, adoption_status, image, onEdit
     return (
         <Card
             sx={{ width: 300, margin: 1, boxShadow: 3 }}
-            className={getCardClass(adoption_status)}
+            className="pet-card"
         >
             <CardMedia
                 sx={{ height: 220, width: "100%", objectFit: "cover", objectPosition: "top" }}

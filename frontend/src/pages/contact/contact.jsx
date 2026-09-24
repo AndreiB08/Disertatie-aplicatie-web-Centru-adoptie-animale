@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { SERVER_URL } from "../../constants/server_url";
 import './contact.css';

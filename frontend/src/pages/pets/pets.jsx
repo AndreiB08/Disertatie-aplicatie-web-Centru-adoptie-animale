@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import PetCard from "../../components/petCard/petCard.jsx";
 import { Grid, TextField, MenuItem, Pagination, Button } from "@mui/material";
@@ -22,15 +22,19 @@ const Pets = () => {
 
     const isAuthenticated = Boolean(localStorage.getItem("token"));
 
-    const fetchPets = () => {
+    const fetchPets = useCallback(() => {
         axios.get(`${SERVER_URL}/pets`)
             .then((res) => {
                 const allPets = res.data.animals;
-                const visiblePets = isAuthenticated ? allPets : allPets.filter(pet => pet.adoption_status !== ADOPTION_STATUSES.ADOPTAT);
+                const visiblePets = isAuthenticated
+                    ? allPets
+                    : allPets.filter(
+                        pet => pet.adoption_status !== ADOPTION_STATUSES.ADOPTAT
+                    );
                 setPets(visiblePets);
             })
             .catch((err) => console.error("Error fetching pets: ", err));
-    };
+    }, [isAuthenticated]);
 
     useEffect(() => {
         const updateItemsPerPage = () => setItemsPerPage(calculateItemsPerPage());
@@ -41,7 +45,7 @@ const Pets = () => {
 
     useEffect(() => {
         fetchPets();
-    }, [isAuthenticated]);
+    }, [fetchPets]);
 
     useEffect(() => {
         const filters = {

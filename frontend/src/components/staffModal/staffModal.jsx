@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Dialog,
@@ -75,7 +75,7 @@ const StaffModal = ({ open, handleClose, employee = null, onSaved, employees = [
     }
     if (!phoneTrimmed) {
       newErrors.phone = "Numărul de telefon este obligatoriu.";
-    } else if (!/^[0-9+\-\(\)\s]*$/.test(phoneTrimmed)) {
+    } else if (!/^[0-9()+\-\s]*$/.test(phoneTrimmed)) {
       newErrors.phone = "Numărul de telefon poate conține doar cifre, semnul +, -, spații și paranteze.";
     } else if (phoneTrimmed.length < 10 || phoneTrimmed.length > 15) {
       newErrors.phone = "Numărul trebuie să înceapă cu 07 și să conțină 10-15 cifre.";

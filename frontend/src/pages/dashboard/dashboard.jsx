@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import './dashboard.css';
 import { SERVER_URL } from "../../constants/server_url";
 import '../../colors.css';
-import { ADOPTION_STATUSES } from "../../../../backend/src/constants/enums";
 
 const Dashboard = () => {
     const [stats, setStats] = useState({ total: 0, adopted: 0, available: 0, reserved: 0 });
     const [requests, setRequests] = useState([]);
-    const [colors, setColors] = useState(["#ccc", "#ccc", "#ccc"]);
     const [messages, setMessages] = useState([]);
-
-    useEffect(() => {
-        const rootStyles = getComputedStyle(document.documentElement);
-        setColors([
-            rootStyles.getPropertyValue('--color-red').trim(),
-            rootStyles.getPropertyValue('--color-green').trim(),
-            rootStyles.getPropertyValue('--color-yellow').trim()
-        ]);
-    }, []);
 
     const fetchUnapprovedRequests = async () => {
         try {
@@ -159,12 +147,6 @@ const Dashboard = () => {
             console.error("Eroare la respingerea cererii:", error);
         }
     };
-
-    const data = [
-        { name: "Adoptat", value: stats.adopted },
-        { name: "Disponibil", value: stats.available },
-        { name: "Rezervat", value: stats.reserved },
-    ];
 
     return (
         <div className="dashboard page">

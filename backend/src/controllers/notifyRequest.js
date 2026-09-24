@@ -75,12 +75,9 @@ export const notifyAvailability = async (req, res) => {
       "https://a1petmeats.com.au/wp-content/uploads/2019/11/no-image-available.jpg";
     const isFemale = animal?.gender === "Femelă";
 
-    const subjectGender = isFemale ? "ea este disponibilă" : "el este disponibil";
     const introSentence = isFemale
       ? `Ne bucurăm să îți dăm vestea că <strong>${animalName}</strong> este din nou disponibilă pentru adopție!`
       : `Ne bucurăm să îți dăm vestea că <strong>${animalName}</strong> este din nou disponibil pentru adopție!`;
-
-    const available = isFemale ? "available" : "available";
 
     const transporter = nodemailer.createTransport({
       service: "gmail",

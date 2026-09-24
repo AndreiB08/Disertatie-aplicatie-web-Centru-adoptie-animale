@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./petDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,10 +9,8 @@ import AdoptModal from "../../components/adoptModal/adoptModal";
 const PetDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [translatedNote, setTranslatedNote] = useState("");
     const [pet, setPet] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [selectedImage, setSelectedImage] = useState("");
     const [showContactModal, setShowContactModal] = useState(false);
 
@@ -42,7 +40,6 @@ const PetDetails = () => {
     }, [id, navigate]);
 
     if (loading) return <p className="loading">Se încarcă...</p>;
-    if (error) return <p className="error">Eroare la încărcarea detaliilor</p>;
 
     return (
         <div className="page">

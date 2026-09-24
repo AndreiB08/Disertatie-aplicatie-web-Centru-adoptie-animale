@@ -19,18 +19,8 @@ app.use(express.json());
 
 app.use("/", indexRouter);
 
-const startServer = async () => {
-    try {
-        console.log("Starting server...");
+console.log("Starting server...");
 
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}...`);
-        });
-
-    } catch (err) {
-        console.error("Database startup error:", err);
-        process.exit(1);
-    }
-};
-
-startServer();
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}...`);
+});

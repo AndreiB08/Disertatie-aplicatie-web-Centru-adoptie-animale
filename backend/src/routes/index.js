@@ -5,13 +5,12 @@ import { router as adoptionRouter } from "./adoptionRequest.js";
 import { router as notifyRouter } from "./notifyRequest.js";
 import { router as statisticsRouter } from "./statistics.js";
 import { router as contactRouter } from "./contact.js";
-import {router as aiAdviceRouter } from "./aiAdvice.js";
+import { router as aiAdviceRouter } from "./aiAdvice.js";
 
 export const router = express.Router();
 
 router.get("/", (req, res, next) => {
     res.status(200).json({ message: "API is running" });
-    next();
 });
 
 router.use("/employees", employeeRouter);

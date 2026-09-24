@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import NavBar from "./components/navbar/navbar.jsx";
 import Footer from "./components/footer/footer.jsx";
@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;

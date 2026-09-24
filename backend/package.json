@@ -4,8 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/main.js",
-    "seed": "node src/seed/runAllSeeds.js"
+    "dev": "nodemon src/main.js"
   },
   "keywords": [],
   "author": "",

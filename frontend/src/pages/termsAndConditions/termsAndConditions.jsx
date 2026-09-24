@@ -1,4 +1,3 @@
-import React from "react";
 import "./termsAndConditions.css";
 
 const TermsAndConditions = () => {
