@@ -30,6 +30,29 @@ const Staff = () => {
         fetchEmployees();
     }, [navigate]);
 
+    const applyFilters = useCallback(() => {
+        let result = employees;
+
+        if (nameFilter) {
+            result = result.filter(emp =>
+                `${emp.first_name} ${emp.last_name}`.toLowerCase().includes(nameFilter.toLowerCase())
+            );
+        }
+
+        if (emailFilter) {
+            result = result.filter(emp =>
+                emp.email.toLowerCase().includes(emailFilter.toLowerCase())
+            );
+        }
+
+        if (roleFilter) {
+            result = result.filter(emp => emp.role === roleFilter);
+        }
+
+        setPage(1);
+        setFiltered(result);
+    }, [employees, nameFilter, emailFilter, roleFilter]);
+
     useEffect(() => {
         applyFilters();
     }, [applyFilters]);
@@ -78,29 +101,6 @@ const Staff = () => {
             alert("Error deleting employee.");
         }
     };
-
-    const applyFilters = useCallback(() => {
-        let result = employees;
-
-        if (nameFilter) {
-            result = result.filter(emp =>
-                `${emp.first_name} ${emp.last_name}`.toLowerCase().includes(nameFilter.toLowerCase())
-            );
-        }
-
-        if (emailFilter) {
-            result = result.filter(emp =>
-                emp.email.toLowerCase().includes(emailFilter.toLowerCase())
-            );
-        }
-
-        if (roleFilter) {
-            result = result.filter(emp => emp.role === roleFilter);
-        }
-
-        setPage(1);
-        setFiltered(result);
-    }, [employees, nameFilter, emailFilter, roleFilter]);
 
     const handleResetFilters = () => {
         setNameFilter("");
