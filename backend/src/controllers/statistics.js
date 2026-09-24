@@ -1,17 +1,19 @@
-import { Animal } from "../models/animal.js";
-import { Op } from "sequelize";
+import { db } from "../config/firebase.js";
 
 export const getStatistics = async (req, res) => {
   try {
-    const totalAnimals = await Animal.count();
+    const snapshot = await db.collection("animals").get();
+    const animals = snapshot.docs.map((doc) => doc.data());
 
-    const adoptedAnimals = await Animal.count({
-      where: { adoption_status: "Adoptat" },
-    });
+    const totalAnimals = animals.length;
 
-    const treatedAnimals = await Animal.count({
-      where: { health_status: "Sănătos" },
-    });
+    const adoptedAnimals = animals.filter(
+      (animal) => animal.adoption_status === "Adoptat"
+    ).length;
+
+    const treatedAnimals = animals.filter(
+      (animal) => animal.health_status === "Sănătos"
+    ).length;
 
     res.json({
       animalsRescued: totalAnimals,
