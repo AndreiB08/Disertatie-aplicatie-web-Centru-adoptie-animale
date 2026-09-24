@@ -1,10 +1,21 @@
-import { Contact } from "../models/contact.js";
-import { validate as isUUID } from "uuid";
+import { db } from "../config/firebase.js";
 
 export const getContacts = async (req, res) => {
     try {
-        const messages = await Contact.findAll({
-            order: [['createdAt', 'DESC']],
+        const snapshot = await db
+            .collection("contacts")
+            .orderBy("createdAt", "desc")
+            .get();
+
+        const messages = snapshot.docs.map((doc) => {
+            const data = doc.data();
+
+            return {
+                id: doc.id,
+                ...data,
+                createdAt: data.createdAt?.toDate().toISOString(),
+                updatedAt: data.updatedAt?.toDate().toISOString(),
+            };
         });
         res.status(200).json(messages);
     } catch (err) {
@@ -21,7 +32,13 @@ export const addContact = async (req, res) => {
     }
 
     try {
-        await Contact.create({ name, email, message });
+        await db.collection("contacts").add({
+            name,
+            email: email.toLowerCase(),
+            message,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        });
         res.status(200).json({ message: 'Message received successfully' });
     } catch (err) {
         console.error('Error saving message:', err);
@@ -32,10 +49,11 @@ export const addContact = async (req, res) => {
 export const deleteContact = async (req, res) => {
     const { id } = req.params;
     try {
-        const message = await Contact.findByPk(id);
-        if (!message) return res.status(404).json({ error: "Message not found" });
-
-        await message.destroy();
+        const message = await db.collection("contacts").doc(id).get();
+        if (!message.exists) {
+            return res.status(404).json({ error: "Message not found" });
+        }
+        await db.collection("contacts").doc(id).delete();
         res.status(204).end();
     } catch (err) {
         console.error("Error deleting message:", err);
