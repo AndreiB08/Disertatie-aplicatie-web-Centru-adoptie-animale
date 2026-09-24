@@ -8,14 +8,14 @@ import AIAdvice from "../../components/aiAdvice/aiAdvice.jsx";
 import 'swiper/css/bundle';
 import './home.css';
 
-import caine1 from '../../Assets/caine1.jpeg';
-import adoption from '../../Assets/adoption.jpg';
-import caine3 from '../../Assets/caine3.jpg';
-import rescue from '../../Assets/rescue.jpg';
-import education from '../../Assets/education.jpg';
-import papagal from '../../Assets/papagal.jpg';
-import pisica1 from '../../Assets/pisica1.jpg';
-import care from '../../Assets/care.jpg';
+import caine1 from '../../assets/caine1.jpeg';
+import adoption from '../../assets/adoption.jpg';
+import caine3 from '../../assets/caine3.jpg';
+import rescue from '../../assets/rescue.jpg';
+import education from '../../assets/education.jpg';
+import papagal from '../../assets/papagal.jpg';
+import pisica1 from '../../assets/pisica1.jpg';
+import care from '../../assets/care.jpg';
 
 const Home = () => {
 	const images = [caine1, pisica1, caine3, papagal];

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import StaffModal from "../../components/staffModal/staffModal";
 import { Pagination, TextField, MenuItem, Button } from "@mui/material";
 import { SERVER_URL } from "../../constants/server_url";
-import './Staff.css';
+import './staff.css';
 import { EMPLOYEE_ROLES } from "../../../../backend/src/constants/enums";
 
 const Staff = () => {

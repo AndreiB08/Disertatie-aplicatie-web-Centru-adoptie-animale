@@ -12,7 +12,7 @@ import {
   faGauge
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./NavBar.css";
+import "./navbar.css";
 
 const NavBar = () => {
   const navigate = useNavigate();

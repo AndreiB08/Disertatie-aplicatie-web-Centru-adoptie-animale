@@ -3,11 +3,11 @@ import { SERVER_URL } from "../../constants/server_url";
 import axios from "axios";
 import "./aboutUs.css";
 
-import rescue from '../../Assets/rescue.jpg';
-import care from '../../Assets/care.jpg';
-import adoption from '../../Assets/adoption.jpg';
-import education from '../../Assets/education.jpg';
-import hero from '../../Assets/hero.jpg';
+import rescue from '../../assets/rescue.jpg';
+import care from '../../assets/care.jpg';
+import adoption from '../../assets/adoption.jpg';
+import education from '../../assets/education.jpg';
+import hero from '../../assets/hero.jpg';
 
 const About = () => {
 
