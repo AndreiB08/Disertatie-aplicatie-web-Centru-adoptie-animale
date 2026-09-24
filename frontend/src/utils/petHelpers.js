@@ -1,7 +1,5 @@
 export const calculateItemsPerPage = () => {
 
-    // console.log("latime:", window.innerWidth);
-
     const width = window.innerWidth;
     if (width >= 1900) return 10;
     if (width >= 1500) return 8;
@@ -16,7 +14,7 @@ export const paginatePets = (data, page, itemsPerPage) => {
 export const filterPets = (pets, filters = {}) => {
     const { species, adoption_status, name, breed, status } = filters;
     const effectiveStatus = status || adoption_status;
-    
+
     return pets.filter(pet => {
         const matchSpecies = species ? pet.species === species : true;
         const matchStatus = effectiveStatus ? pet.adoption_status === effectiveStatus : true;

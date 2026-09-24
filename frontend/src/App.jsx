@@ -14,6 +14,7 @@ import Login from "./pages/login/login.jsx";
 import Dashboard from "./pages/dashboard/dashboard.jsx";
 import Staff from "./pages/staff/staff.jsx";
 import Account from "./pages/account/account.jsx";
+import ChangePassword from "./pages/changePassword/changePassword.jsx";
 import "./App.css";
 import TermsAndConditions from "./pages/termsAndConditions/termsAndConditions.jsx";
 
@@ -25,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideLayout = ["/login"].includes(location.pathname);
+  const hideLayout = ["/login", "/change-password"].includes(location.pathname);
   const hideFooterForAdmin = location.pathname.startsWith("/admin");
 
   return (
@@ -62,6 +63,15 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
 
           <Route path="/login" element={<Login />} />
+
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/admin/dashboard"
             element={

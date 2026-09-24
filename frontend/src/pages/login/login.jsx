@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './login.css';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import { SERVER_URL } from "../../constants/server_url";
 
 const Login = () => {
@@ -16,27 +18,56 @@ const Login = () => {
         setError(null);
 
         try {
-            const response = await fetch(`${SERVER_URL}/employees/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-            const data = await response.json();
+            const user = userCredential.user;
+            const token = await user.getIdToken();
 
-            if (!response.ok) {
-                throw new Error(data.message || "Login eșuat.");
-            }
-
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("role", data.employee.role);
-            localStorage.setItem("id", data.employee.id);
+            localStorage.setItem("token", token);
             localStorage.setItem("isAuthenticated", "true");
 
-            navigate("/admin/dashboard");
+            const employeeResponse = await fetch(`${SERVER_URL}/employees/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const employeeData = await employeeResponse.json();
+
+            if (!employeeResponse.ok) {
+                throw new Error(
+                    employeeData.message ||
+                    "Nu s-au putut încărca datele angajatului."
+                );
+            }
+
+            localStorage.setItem("role", employeeData.role);
+            localStorage.setItem("id", employeeData.id);
+
+            if (employeeData.mustChangePassword) {
+                navigate("/change-password");
+            } else {
+                navigate("/admin/dashboard");
+            }
 
         } catch (err) {
-            setError(err.message);
+            console.error("Firebase Login Error:", err);
+
+            if (
+                err.code === "auth/invalid-credential" ||
+                err.code === "auth/user-not-found" ||
+                err.code === "auth/wrong-password"
+            ) {
+                setError("Email sau parolă incorectă.");
+            } else {
+                setError(
+                    err.message || "Autentificarea a eșuat."
+                );
+            }
         } finally {
             setLoading(false);
         }
