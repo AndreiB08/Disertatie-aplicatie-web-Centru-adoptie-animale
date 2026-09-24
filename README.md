@@ -38,8 +38,6 @@ Această aplicație este realizată ca lucrare de licență și reprezintă o ap
 
 ### Back-end:
 - Node.js + Express
-- Sequelize (ORM)
-- SQLite
 - JWT pentru autentificare
 
 ---
