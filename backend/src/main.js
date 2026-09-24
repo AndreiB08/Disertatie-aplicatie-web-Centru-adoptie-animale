@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import "./config/firebase.js";
 import { synchronizeDatabase } from "./config/database.js";
 import { router as indexRouter } from "./routes/index.js";
-import "./models/associations.js";
 
 dotenv.config();
 

@@ -1,9 +1,11 @@
-import { NotifyRequest } from "../models/notifyRequest.js";
-import { Animal } from "../models/animal.js";
+import { db } from "../config/firebase.js";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 
 dotenv.config();
+
+const notifyRequestsCollection = db.collection("notification_requests");
+const animalsCollection = db.collection("animals");
 
 export const addNotifyRequest = async (req, res) => {
   try {
@@ -12,13 +14,32 @@ export const addNotifyRequest = async (req, res) => {
     if (!email || !animalId) {
       return res.status(400).json({ message: "Missing email or animalId." });
     }
-    const exists = await NotifyRequest.findOne({ where: { email, animalId } });
-    if (exists) {
-      return res.status(409).json({ message: "Ai solicitat deja o notificare pentru acest animal." });
+    const normalizedEmail = email.toLowerCase();
+
+    const existingSnapshot = await notifyRequestsCollection
+      .where("email", "==", normalizedEmail)
+      .where("animalId", "==", animalId)
+      .limit(1)
+      .get();
+
+    if (!existingSnapshot.empty) {
+      return res.status(409).json({
+        message: "Ai solicitat deja o notificare pentru acest animal.",
+      });
     }
 
+    const notifyRef = notifyRequestsCollection.doc();
 
-    const newNotify = await NotifyRequest.create({ email, animalId });
+    const newNotify = {
+      id: notifyRef.id,
+      email: normalizedEmail,
+      animalId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await notifyRef.set(newNotify);
+
     return res.status(201).json({
       message: "Notification request saved successfully.",
       notify: newNotify,
@@ -33,16 +54,25 @@ export const notifyAvailability = async (req, res) => {
   try {
     const { animalId } = req.body;
 
-    const notifyList = await NotifyRequest.findAll({ where: { animalId } });
+    const notifySnapshot = await notifyRequestsCollection
+      .where("animalId", "==", animalId)
+      .get();
+
+    const notifyList = notifySnapshot.docs.map((doc) => doc.data());
 
     if (!notifyList.length) {
-      return res.status(200).json({ message: "No notification requests found for this animal." });
+      return res.status(200).json({
+        message: "No notification requests found for this animal.",
+      });
     }
 
-    const animal = await Animal.findByPk(animalId);
+    const animalDoc = await animalsCollection.doc(animalId).get();
+    const animal = animalDoc.exists ? animalDoc.data() : null;
 
     const animalName = animal ? animal.name : "Acest animal";
-    const animalImage = animal?.image || "https://a1petmeats.com.au/wp-content/uploads/2019/11/no-image-available.jpg";
+    const animalImage =
+      animal?.imageUrl ||
+      "https://a1petmeats.com.au/wp-content/uploads/2019/11/no-image-available.jpg";
     const isFemale = animal?.gender === "Femelă";
 
     const subjectGender = isFemale ? "ea este disponibilă" : "el este disponibil";
@@ -103,7 +133,13 @@ export const notifyAvailability = async (req, res) => {
       await transporter.sendMail(mailOptions);
     }
 
-    await NotifyRequest.destroy({ where: { animalId } });
+    const deleteBatch = db.batch();
+
+    notifySnapshot.docs.forEach((doc) => {
+      deleteBatch.delete(doc.ref);
+    });
+
+    await deleteBatch.commit();
 
     return res.status(200).json({
       message: `Notified ${notifyList.length} people about ${animalName} and cleared the notification requests.`
