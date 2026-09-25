@@ -38,6 +38,7 @@ body {
 }
 
 .title {
+  margin: 0 0 20px;
   font-size: 2.5rem;
   font-weight: bold;
   color: var(--color-titlu);
