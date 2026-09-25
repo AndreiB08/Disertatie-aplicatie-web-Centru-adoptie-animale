@@ -48,7 +48,11 @@ const NavBar = () => {
       </button>
 
       <div className="navbar-logo">
-        <NavLink to={isAuthenticated ? "/admin/dashboard" : "/"} className="navbar-brand">
+        <NavLink
+          to={isAuthenticated ? "/admin/dashboard" : "/"}
+          className="navbar-brand"
+          onClick={closeMenu}
+        >
           Centrul de Adopție Animale
         </NavLink>
       </div>

@@ -115,7 +115,7 @@ const Contact = () => {
 
             <div className="contact-info">
                 <p><strong>📍 Adresă:</strong> Drumul Lunca Jariștei, București</p>
-                <p><strong>📞 Program:</strong> +40 700 426 841</p>
+                <p><strong>📞 Număr telefon:</strong> +40 700 000 000</p>
                 <p><strong>✉️ Email:</strong> contact@centruadoptie.ro</p>
             </div>
         </div>
