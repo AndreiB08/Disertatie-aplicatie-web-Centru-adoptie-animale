@@ -1,107 +1,206 @@
 .about {
-    margin: 0 10px;
+    margin: 0;
 }
 
+/* Layout principal */
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 40px;
+    gap: 2.5rem;
     align-items: flex-start;
     position: relative;
 }
 
 .info {
     flex: 1 1 60%;
+    margin-left: 0;
+    margin-right: 0;
     transition: all 0.3s ease;
-
 }
 
+/* Imaginea principală */
 .about-hero {
-    margin-left: 450px;
+    margin-left: 28.125rem;
+    flex: 1;
+    max-width: 31.25rem;
+    width: 100%;
+    border-radius: 0.75rem;
+    object-fit: cover;
 }
 
+/* Secțiunea Rescue */
 #rescue h2 {
-    margin-left: 450px;
+    margin-left: 28.125rem;
     text-align: center;
 }
 
+/* Intro */
 .intro-section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    margin-bottom: 50px;
+    gap: 1.875rem;
+    margin-bottom: 3.125rem;
 }
 
-.about-hero {
-    flex: 1;
-    max-width: 500px;
-    border-radius: 12px;
-    width: 100%;
-    object-fit: cover;
-}
-
+/* Secțiuni */
 .section {
-    margin-bottom: 60px;
+    margin-bottom: 3.75rem;
 }
 
 .section h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: clamp(1.5rem, 4vw, 1.75rem);
+    margin-bottom: 1.25rem;
     color: var(--color-primary);
 }
 
 .section-content {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 1.875rem;
     align-items: center;
-}
-
-.about img {
-    width: 324px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-.section-content p {
-    flex: 1;
-    min-width: 280px;
-    line-height: 1.6;
-    font-size: 18px;
 }
 
 .section-content.reverse {
     flex-direction: row-reverse;
 }
 
+/* Imagini din secțiuni */
+.about img {
+    width: min(100%, 20.25rem);
+    height: auto;
+    aspect-ratio: 324 / 250;
+    object-fit: cover;
+    border-radius: 0.9375rem;
+}
+
+/* Text */
+.section-content p {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.6;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+/* Statistici */
 .statistics {
     flex: 1 1 35%;
-    max-width: 400px;
+    max-width: 25rem;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1.25rem;
     align-self: flex-start;
 }
 
 .stat-box {
     background-color: #f1f1f1;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 1.25rem;
+    border-radius: 0.625rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
 }
 
 .stat-box h3 {
-    font-size: 32px;
+    font-size: clamp(1.75rem, 5vw, 2rem);
     color: var(--color-primary);
-    margin-bottom: 5px;
+    margin-bottom: 0.3125rem;
 }
 
 .stat-box p {
-    font-size: 15px;
+    font-size: 0.9375rem;
     color: #666;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* Imaginea principală */
+    .about-hero {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    /* Titlul secțiunii Rescue */
+    #rescue h2 {
+        margin-left: 0;
+    }
+
+    /* Coloanele devin verticale */
+    .content-wrapper {
+        flex-direction: column;
+        gap: 1.875rem;
+    }
+
+    .info,
+    .statistics {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        flex: none;
+    }
+
+    /* Conținutul fiecărei secțiuni devine vertical */
+    .section-content,
+    .section-content.reverse {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Imaginile ocupă spațiul disponibil */
+    .about img {
+        width: min(100%, 20.25rem);
+        max-width: 100%;
+    }
+
+    /* Textul ocupă întreaga lățime */
+    .section-content p {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .section {
+        margin-bottom: 3rem;
+    }
+}
+
+
+/* Telefoane */
+@media (max-width: 480px) {
+
+    .about {
+        margin: 0;
+    }
+
+    .intro-section {
+        gap: 1.25rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .section {
+        margin-bottom: 2.5rem;
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+    }
+
+    .section-content {
+        gap: 1.25rem;
+    }
+
+    .about img {
+        width: 100%;
+        max-width: 20.25rem;
+    }
+
+    .stat-box {
+        padding: 1rem;
+    }
 }

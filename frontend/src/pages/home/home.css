@@ -123,3 +123,11 @@
     border: none;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .swiper-container {
+        width: 100%;
+        max-width: 100%;
+        flex-shrink: 1;
+    }
+}

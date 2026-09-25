@@ -40,6 +40,7 @@
 
 .staff-table {
     width: 100%;
+    min-width: 700px;
     border-collapse: collapse;
     background-color: white;
     border-radius: 10px;
@@ -83,4 +84,11 @@
     background-color: var(--color-primary);
     color: white;
     font-weight: bold;
+}
+
+.staff-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
 }

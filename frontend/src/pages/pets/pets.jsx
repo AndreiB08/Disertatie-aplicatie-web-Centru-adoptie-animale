@@ -108,22 +108,14 @@ const Pets = () => {
                 </div>
             )}
 
-            <div
-                style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "16px",
-                    justifyContent: "center",
-                    marginTop: "20px",
-                    marginBottom: "30px"
-                }}
-            >
+            <div className="pets-filters">
+
                 <TextField
+                    className="pet-filter"
                     label="Caută după nume"
                     value={searchName}
                     onChange={handleNameChange}
                     variant="outlined"
-                    sx={{ width: 250 }}
                     slotProps={{
                         input: {
                             style: {
@@ -135,11 +127,11 @@ const Pets = () => {
                 />
 
                 <TextField
+                    className="pet-filter"
                     label="Caută după rasă"
                     value={searchBreed}
                     onChange={handleBreedChange}
                     variant="outlined"
-                    sx={{ width: 250 }}
                     slotProps={{
                         input: {
                             style: {
@@ -151,12 +143,12 @@ const Pets = () => {
                 />
 
                 <TextField
+                    className="pet-filter"
                     select
                     label="Caută după specie"
                     value={selectedSpecies}
                     onChange={handleSpeciesChange}
                     variant="outlined"
-                    sx={{ width: 250 }}
                     slotProps={{
                         input: {
                             style: {
@@ -175,12 +167,12 @@ const Pets = () => {
                 </TextField>
                 {isAuthenticated && (
                     <TextField
+                        className="pet-filter"
                         select
                         label="Caută după status"
                         value={selectedStatus}
                         onChange={handleStatusChange}
                         variant="outlined"
-                        sx={{ width: 250 }}
                         slotProps={{
                             input: {
                                 style: {
@@ -201,12 +193,12 @@ const Pets = () => {
 
                 {!isAuthenticated && (
                     <TextField
+                        className="pet-filter"
                         select
                         label="Caută după status"
                         value={selectedStatus}
                         onChange={handleStatusChange}
                         variant="outlined"
-                        sx={{ width: 250 }}
                         slotProps={{
                             input: {
                                 style: {
@@ -228,10 +220,10 @@ const Pets = () => {
                 )}
 
                 <Button
+                    className="pet-filter"
                     onClick={handleResetFilters}
                     variant="outlined"
                     sx={{
-                        width: 250,
                         fontWeight: "bold",
                         borderRadius: "12px",
                         color: "var(--color-neutral)",
@@ -269,11 +261,13 @@ const Pets = () => {
                 )}
             </Grid>
 
-            {totalPages > 1 && (
-                <div style={{ marginTop: 30, display: "flex", justifyContent: "center" }}>
-                    <Pagination count={totalPages} page={page} onChange={(_, value) => setPage(value)} color="primary" />
-                </div>
-            )}
+            {
+                totalPages > 1 && (
+                    <div style={{ marginTop: 30, display: "flex", justifyContent: "center" }}>
+                        <Pagination count={totalPages} page={page} onChange={(_, value) => setPage(value)} color="primary" />
+                    </div>
+                )
+            }
 
             <PetModal
                 open={openPetModal}
@@ -288,7 +282,7 @@ const Pets = () => {
                 }}
                 initialData={selectedPet}
             />
-        </div>
+        </div >
     );
 };
 

@@ -133,3 +133,36 @@
     color: var(--color-primary);
     margin-bottom: 1rem;
 }
+
+@media (max-width: 768px) {
+    .dashboard.page {
+        padding: 70px 10px 10px;
+    }
+
+    .info-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-info {
+        padding: 0.8rem;
+    }
+
+    .dashboard-info h2 {
+        font-size: 1rem;
+    }
+
+    .dashboard-info p {
+        font-size: 1.8rem;
+    }
+
+    .main-panels {
+        gap: 1rem;
+    }
+
+    .adoption-requests,
+    .contact-messages {
+        padding: 0.8rem;
+    }
+}

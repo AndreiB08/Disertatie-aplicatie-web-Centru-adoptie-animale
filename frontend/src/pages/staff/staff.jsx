@@ -208,38 +208,40 @@ const Staff = () => {
                 <p>Nu s-au găsit angajați care să îndeplinească criteriile.</p>
             ) : (
                 <>
-                    <table className="staff-table">
-                        <thead>
-                            <tr>
-                                <th>Nume</th>
-                                <th>Email</th>
-                                <th>Telefon</th>
-                                <th>Rol</th>
-                                <th>Acțiuni</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginated.map((emp) => (
-                                <tr key={emp.id}>
-                                    <td>{emp.first_name} {emp.last_name}</td>
-                                    <td>{emp.email}</td>
-                                    <td>{emp.phone_number}</td>
-                                    <td>{emp.role}</td>
-                                    <td className="btn-container">
-                                        <button onClick={() => openEditModal(emp)} className="btn btn-edit">Editează</button>
-                                        {emp.id.toString() !== currentUserId?.toString() && (
-                                            <button
-                                                onClick={() => handleDelete(emp.id)}
-                                                className="btn btn-delete"
-                                            >
-                                                Șterge
-                                            </button>
-                                        )}
-                                    </td>
+                    <div className="staff-table-wrapper">
+                        <table className="staff-table">
+                            <thead>
+                                <tr>
+                                    <th>Nume</th>
+                                    <th>Email</th>
+                                    <th>Telefon</th>
+                                    <th>Rol</th>
+                                    <th>Acțiuni</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {paginated.map((emp) => (
+                                    <tr key={emp.id}>
+                                        <td>{emp.first_name} {emp.last_name}</td>
+                                        <td>{emp.email}</td>
+                                        <td>{emp.phone_number}</td>
+                                        <td>{emp.role}</td>
+                                        <td className="btn-container">
+                                            <button onClick={() => openEditModal(emp)} className="btn btn-edit">Editează</button>
+                                            {emp.id.toString() !== currentUserId?.toString() && (
+                                                <button
+                                                    onClick={() => handleDelete(emp.id)}
+                                                    className="btn btn-delete"
+                                                >
+                                                    Șterge
+                                                </button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
                     {totalPages > 1 && (
                         <div style={{ marginTop: 30, display: "flex", justifyContent: "center" }}>

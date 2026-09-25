@@ -70,7 +70,7 @@ const PetDetails = () => {
                                 Adoptă-mă
                             </button>
                             <button className="btn btn-secondary" onClick={() => navigate("/pets")}>
-                                Vezi alte animale
+                                Înapoi la animale
                             </button>
                         </div>
                     </div>
