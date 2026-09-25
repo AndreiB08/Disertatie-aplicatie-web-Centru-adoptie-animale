@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import "./config/firebase.js";
+import { checkAdoptionReminders } from "./services/adoptionReminder.js";
 import { router as indexRouter } from "./routes/index.js";
 
 dotenv.config();
@@ -36,4 +37,8 @@ console.log("Starting server...");
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}...`);
+
+    checkAdoptionReminders();
+
+    setInterval(checkAdoptionReminders, 60 * 1000);
 });

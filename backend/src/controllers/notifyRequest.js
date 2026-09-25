@@ -6,6 +6,7 @@ dotenv.config();
 
 const notifyRequestsCollection = db.collection("notification_requests");
 const animalsCollection = db.collection("animals");
+const adoptionRequestsCollection = db.collection("adoption_requests");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const addNotifyRequest = async (req, res) => {
@@ -15,7 +16,20 @@ export const addNotifyRequest = async (req, res) => {
     if (!email || !animalId) {
       return res.status(400).json({ message: "Missing email or animalId." });
     }
-    const normalizedEmail = email.toLowerCase();
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const adoptionSnapshot = await adoptionRequestsCollection
+      .where("adopter_email", "==", normalizedEmail)
+      .where("animalId", "==", animalId)
+      .limit(1)
+      .get();
+
+    if (!adoptionSnapshot.empty) {
+      return res.status(409).json({
+        message:
+          "Ai completat deja formularul de adopție pentru acest animal și nu mai poți solicita o notificare.",
+      });
+    }
 
     const existingSnapshot = await notifyRequestsCollection
       .where("email", "==", normalizedEmail)

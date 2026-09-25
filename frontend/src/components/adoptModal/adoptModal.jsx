@@ -68,10 +68,11 @@ const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
                 newErrors.pickup_datetime = "Selectează ziua și ora.";
             } else {
                 const selectedDate = new Date(formData.pickup_datetime);
-                const now = new Date();
+                const minPickupDate = new Date(Date.now() + 60 * 60 * 1000);
 
-                if (selectedDate < now) {
-                    newErrors.pickup_datetime = "Data și ora trebuie să fie în viitor.";
+                if (selectedDate < minPickupDate) {
+                    newErrors.pickup_datetime =
+                        "Data și ora rezervării trebuie să fie la cel puțin o oră de la completarea formularului.";
                 }
             }
         }
@@ -127,6 +128,7 @@ const AdoptModal = ({ open, setOpen, animalId, notifyOnly = false }) => {
                     animalId,
                 });
 
+                alert("Cererea ta de rezervare a fost trimisă cu succes! Te așteptăm pentru adopție.");
             }
 
             setFormData(initialForm);
