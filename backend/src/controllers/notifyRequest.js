@@ -1,11 +1,12 @@
 import { db } from "../config/firebase.js";
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 dotenv.config();
 
 const notifyRequestsCollection = db.collection("notification_requests");
 const animalsCollection = db.collection("animals");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const addNotifyRequest = async (req, res) => {
   try {
@@ -79,23 +80,11 @@ export const notifyAvailability = async (req, res) => {
       ? `Ne bucurăm să îți dăm vestea că <strong>${animalName}</strong> este din nou disponibilă pentru adopție!`
       : `Ne bucurăm să îți dăm vestea că <strong>${animalName}</strong> este din nou disponibil pentru adopție!`;
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
     for (const notify of notifyList) {
-      const mailOptions = {
-        from: process.env.GMAIL_USER,
+      const { data, error } = await resend.emails.send({
+        from: "onboarding@resend.dev",
         to: notify.email,
         subject: `${animalName} este din nou disponibil${isFemale ? "ă" : ""} pentru adopție!`,
-
         html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f7f7f7; padding: 20px;">
           <div style="max-width: 700px; margin: auto; background-color: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
@@ -110,7 +99,7 @@ export const notifyAvailability = async (req, res) => {
                 Poți vedea mai multe detalii accesând următorul link:
               </p>
               <a 
-                href="http://localhost:5173/pets/${animalId}"
+                href="https://centru-adoptie-animale.vercel.app/pets/${animalId}"
                 style="display: inline-block; background-color: #437f83; color: white; padding: 10px 18px; text-decoration: none; 
                       border-radius: 5px; margin-top: 10px; font-weight: bold;"
               >
@@ -124,10 +113,14 @@ export const notifyAvailability = async (req, res) => {
             </div>
           </div>
         </div>
-      `
-      };
+      `,
+      });
 
-      await transporter.sendMail(mailOptions);
+      if (error) {
+        throw new Error(`Resend error: ${error.message}`);
+      }
+
+      console.log(`Email sent to ${notify.email}:`, data?.id);
     }
 
     const deleteBatch = db.batch();

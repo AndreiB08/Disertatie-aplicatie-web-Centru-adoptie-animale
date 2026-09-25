@@ -128,21 +128,29 @@ const Dashboard = () => {
                 },
             });
 
+            setRequests(prev => prev.filter(req => req.id !== id));
+
             if (request?.animalId) {
-                await axios.post(
-                    `${SERVER_URL}/notify-requests/notify-availability`,
-                    { animalId: request.animalId },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    }
-                );
+                try {
+                    await axios.post(
+                        `${SERVER_URL}/notify-requests/notify-availability`,
+                        { animalId: request.animalId },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                            },
+                        }
+                    );
+                } catch (notificationError) {
+                    console.error(
+                        "Cererea a fost respinsă, dar notificarea prin email a eșuat:",
+                        notificationError
+                    );
+                }
             }
 
             const updatedStats = await fetchStats();
             setStats(updatedStats);
-            setRequests(prev => prev.filter(req => req.id !== id));
         } catch (error) {
             console.error("Eroare la respingerea cererii:", error);
         }
