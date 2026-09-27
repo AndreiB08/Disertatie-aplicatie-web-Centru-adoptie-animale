@@ -1,12 +1,25 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import PetCard from "../../components/petCard/petCard.jsx";
-import { Grid, TextField, MenuItem, Pagination, Button } from "@mui/material";
-import { calculateItemsPerPage, paginatePets, filterPets } from "../../utils/petHelpers";
+import {
+    Grid,
+    TextField,
+    MenuItem,
+    Pagination,
+    Button
+} from "@mui/material";
+import {
+    calculateItemsPerPage,
+    paginatePets,
+    filterPets
+} from "../../utils/petHelpers";
 import PetModal from "../../components/petModal/petModal.jsx";
 import { SERVER_URL } from "../../constants/server_url";
-import { SPECIES, ADOPTION_STATUSES } from "../../../../backend/src/constants/enums";
-import './pets.css';
+import {
+    SPECIES,
+    ADOPTION_STATUSES
+} from "../../../../backend/src/constants/enums";
+import "./pets.css";
 
 const Pets = () => {
     const [pets, setPets] = useState([]);
@@ -23,24 +36,37 @@ const Pets = () => {
     const isAuthenticated = Boolean(localStorage.getItem("token"));
 
     const fetchPets = useCallback(() => {
-        axios.get(`${SERVER_URL}/pets`)
+        axios
+            .get(`${SERVER_URL}/pets`)
             .then((res) => {
                 const allPets = res.data.animals;
+
                 const visiblePets = isAuthenticated
                     ? allPets
                     : allPets.filter(
-                        pet => pet.adoption_status !== ADOPTION_STATUSES.ADOPTAT
+                        (pet) =>
+                            pet.adoption_status !==
+                            ADOPTION_STATUSES.ADOPTAT
                     );
+
                 setPets(visiblePets);
             })
-            .catch((err) => console.error("Error fetching pets: ", err));
+            .catch((err) => {
+                console.error("Error fetching pets:", err);
+            });
     }, [isAuthenticated]);
 
     useEffect(() => {
-        const updateItemsPerPage = () => setItemsPerPage(calculateItemsPerPage());
+        const updateItemsPerPage = () => {
+            setItemsPerPage(calculateItemsPerPage());
+        };
+
         updateItemsPerPage();
         window.addEventListener("resize", updateItemsPerPage);
-        return () => window.removeEventListener("resize", updateItemsPerPage);
+
+        return () => {
+            window.removeEventListener("resize", updateItemsPerPage);
+        };
     }, []);
 
     useEffect(() => {
@@ -54,17 +80,35 @@ const Pets = () => {
             name: searchName,
             breed: searchBreed
         };
-        if (isAuthenticated) filters.status = selectedStatus;
 
         const result = filterPets(pets, filters);
+
         setFilteredPets(result);
         setPage(1);
-    }, [pets, selectedSpecies, selectedStatus, searchName, searchBreed, isAuthenticated]);
+    }, [
+        pets,
+        selectedSpecies,
+        selectedStatus,
+        searchName,
+        searchBreed,
+        isAuthenticated
+    ]);
 
-    const handleSpeciesChange = (event) => setSelectedSpecies(event.target.value);
-    const handleStatusChange = (event) => setSelectedStatus(event.target.value);
-    const handleNameChange = (event) => setSearchName(event.target.value);
-    const handleBreedChange = (event) => setSearchBreed(event.target.value);
+    const handleSpeciesChange = (event) => {
+        setSelectedSpecies(event.target.value);
+    };
+
+    const handleStatusChange = (event) => {
+        setSelectedStatus(event.target.value);
+    };
+
+    const handleNameChange = (event) => {
+        setSearchName(event.target.value);
+    };
+
+    const handleBreedChange = (event) => {
+        setSearchBreed(event.target.value);
+    };
 
     const handleResetFilters = () => {
         setSelectedSpecies("");
@@ -80,17 +124,32 @@ const Pets = () => {
         setOpenPetModal(true);
     };
 
-    const paginatedPets = paginatePets(filteredPets, page, itemsPerPage);
-    const totalPages = Math.ceil(filteredPets.length / itemsPerPage);
+    const paginatedPets = paginatePets(
+        filteredPets,
+        page,
+        itemsPerPage
+    );
+
+    const totalPages = Math.ceil(
+        filteredPets.length / itemsPerPage
+    );
 
     return (
         <div className="page">
             <h3 className="title">
-                {isAuthenticated ? "Toate animalele" : "Animalele din centru"}
+                {isAuthenticated
+                    ? "Toate animalele"
+                    : "Animalele din centru"}
             </h3>
 
             {isAuthenticated && (
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "10px"
+                    }}
+                >
                     <Button
                         variant="contained"
                         onClick={() => {
@@ -100,7 +159,10 @@ const Pets = () => {
                         sx={{
                             fontWeight: "bold",
                             backgroundColor: "var(--color-primary)",
-                            "&:hover": { backgroundColor: "var(--color-primary-hover)" }
+                            "&:hover": {
+                                backgroundColor:
+                                    "var(--color-primary-hover)"
+                            }
                         }}
                     >
                         Adaugă animal nou
@@ -109,7 +171,6 @@ const Pets = () => {
             )}
 
             <div className="pets-filters">
-
                 <TextField
                     className="pet-filter"
                     label="Caută după nume"
@@ -159,65 +220,48 @@ const Pets = () => {
                     }}
                 >
                     <MenuItem value="">Toate speciile</MenuItem>
+
                     {Object.values(SPECIES).map((specie) => (
                         <MenuItem key={specie} value={specie}>
                             {specie}
                         </MenuItem>
                     ))}
                 </TextField>
-                {isAuthenticated && (
-                    <TextField
-                        className="pet-filter"
-                        select
-                        label="Caută după status"
-                        value={selectedStatus}
-                        onChange={handleStatusChange}
-                        variant="outlined"
-                        slotProps={{
-                            input: {
-                                style: {
-                                    backgroundColor: "white",
-                                    borderRadius: "12px"
-                                }
+
+                <TextField
+                    className="pet-filter"
+                    select
+                    label="Caută după status"
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    variant="outlined"
+                    slotProps={{
+                        input: {
+                            style: {
+                                backgroundColor: "white",
+                                borderRadius: "12px"
                             }
-                        }}
-                    >
-                        <MenuItem value="">Toate statusurile</MenuItem>
-                        {Object.values(ADOPTION_STATUSES).map((status) => (
+                        }
+                    }}
+                >
+                    <MenuItem value="">
+                        {isAuthenticated
+                            ? "Toate statusurile"
+                            : "Caută după status"}
+                    </MenuItem>
+
+                    {Object.values(ADOPTION_STATUSES)
+                        .filter(
+                            (status) =>
+                                isAuthenticated ||
+                                ["Disponibil", "Rezervat"].includes(status)
+                        )
+                        .map((status) => (
                             <MenuItem key={status} value={status}>
                                 {status}
                             </MenuItem>
                         ))}
-                    </TextField>
-                )}
-
-                {!isAuthenticated && (
-                    <TextField
-                        className="pet-filter"
-                        select
-                        label="Caută după status"
-                        value={selectedStatus}
-                        onChange={handleStatusChange}
-                        variant="outlined"
-                        slotProps={{
-                            input: {
-                                style: {
-                                    backgroundColor: "white",
-                                    borderRadius: "12px"
-                                }
-                            }
-                        }}
-                    >
-                        <MenuItem value="">Caută după status</MenuItem>
-                        {Object.values(ADOPTION_STATUSES)
-                            .filter(status => ["Disponibil", "Rezervat"].includes(status))
-                            .map((status) => (
-                                <MenuItem key={status} value={status}>
-                                    {status}
-                                </MenuItem>
-                            ))}
-                    </TextField>
-                )}
+                </TextField>
 
                 <Button
                     className="pet-filter"
@@ -240,10 +284,23 @@ const Pets = () => {
                 </Button>
             </div>
 
-            <Grid container spacing={5} justifyContent="center">
+            <Grid
+                container
+                spacing={5}
+                justifyContent="center"
+                alignItems="stretch"
+            >
                 {paginatedPets.length > 0 ? (
                     paginatedPets.map((pet) => (
-                        <Grid key={pet.id}>
+                        <Grid
+                            key={pet.id}
+                            sx={{
+                                width: 275,
+                                display: "flex",
+                                alignItems: "stretch",
+                                justifyContent: "center"
+                            }}
+                        >
                             <PetCard
                                 id={pet.id}
                                 name={pet.name}
@@ -257,17 +314,28 @@ const Pets = () => {
                         </Grid>
                     ))
                 ) : (
-                    <p className="p-not-available">Momentan, nu există animale disponibile.</p>
+                    <p className="p-not-available">
+                        Momentan, nu există animale disponibile.
+                    </p>
                 )}
             </Grid>
 
-            {
-                totalPages > 1 && (
-                    <div style={{ marginTop: 30, display: "flex", justifyContent: "center" }}>
-                        <Pagination count={totalPages} page={page} onChange={(_, value) => setPage(value)} color="primary" />
-                    </div>
-                )
-            }
+            {totalPages > 1 && (
+                <div
+                    style={{
+                        marginTop: 30,
+                        display: "flex",
+                        justifyContent: "center"
+                    }}
+                >
+                    <Pagination
+                        count={totalPages}
+                        page={page}
+                        onChange={(_, value) => setPage(value)}
+                        color="primary"
+                    />
+                </div>
+            )}
 
             <PetModal
                 open={openPetModal}
@@ -282,7 +350,7 @@ const Pets = () => {
                 }}
                 initialData={selectedPet}
             />
-        </div >
+        </div>
     );
 };
 
