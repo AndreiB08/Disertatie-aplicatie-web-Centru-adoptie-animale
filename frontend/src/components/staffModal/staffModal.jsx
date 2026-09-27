@@ -107,7 +107,7 @@ const StaffModal = ({ open, handleClose, employee = null, onSaved, employees = [
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     const payload = {
       first_name: formData.first_name.trim(),

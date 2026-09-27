@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './login.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, authPersistence } from "../../firebase";
 import { SERVER_URL } from "../../constants/server_url";
 
 const Login = () => {
@@ -18,6 +18,8 @@ const Login = () => {
         setError(null);
 
         try {
+            await authPersistence;
+
             const userCredential = await signInWithEmailAndPassword(
                 auth,
                 email,
@@ -27,8 +29,8 @@ const Login = () => {
             const user = userCredential.user;
             const token = await user.getIdToken();
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("isAuthenticated", "true");
+            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("isAuthenticated", "true");
 
             const employeeResponse = await fetch(`${SERVER_URL}/employees/me`, {
                 headers: {
@@ -45,8 +47,8 @@ const Login = () => {
                 );
             }
 
-            localStorage.setItem("role", employeeData.role);
-            localStorage.setItem("id", employeeData.id);
+            sessionStorage.setItem("role", employeeData.role);
+            sessionStorage.setItem("id", employeeData.id);
 
             if (employeeData.mustChangePassword) {
                 navigate("/change-password");

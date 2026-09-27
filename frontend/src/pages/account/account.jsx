@@ -22,14 +22,14 @@ const Account = () => {
 
     const fetchProfile = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
             const res = await axios.get(`${SERVER_URL}/employees/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
             const data = res.data;
 
-            localStorage.setItem("id", data.id);
+            sessionStorage.setItem("id", data.id);
 
             setForm({
                 first_name: data.first_name || "",
@@ -85,7 +85,7 @@ const Account = () => {
         }
 
         try {
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
 
             const body = {
                 ...form,

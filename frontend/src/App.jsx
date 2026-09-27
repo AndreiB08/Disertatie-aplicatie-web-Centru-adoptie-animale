@@ -20,7 +20,7 @@ import TermsAndConditions from "./pages/termsAndConditions/termsAndConditions.js
 
 
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const isAuthenticated = sessionStorage.getItem("isAuthenticated") === "true";
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 

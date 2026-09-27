@@ -32,7 +32,7 @@ import "./home.css";
 
 const Home = () => {
 	const navigate = useNavigate();
-	const role = localStorage.getItem("role");
+	const role = sessionStorage.getItem("role");
 	const [showChat, setShowChat] = useState(false);
 
 	const images = [caine1, pisica1, caine3, papagal];

@@ -13,7 +13,7 @@ const Dashboard = () => {
         try {
             const res = await axios.get(`${SERVER_URL}/adoption-requests`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                 },
             });
 
@@ -31,7 +31,7 @@ const Dashboard = () => {
             try {
                 const res = await axios.get(`${SERVER_URL}/contact`, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                     },
                 });
                 const sortedMessages = res.data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
@@ -48,7 +48,7 @@ const Dashboard = () => {
         try {
             await axios.delete(`${SERVER_URL}/contact/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                 },
             });
 
@@ -105,7 +105,7 @@ const Dashboard = () => {
                 { approved: true },
                 {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                     },
                 }
             );
@@ -124,7 +124,7 @@ const Dashboard = () => {
 
             await axios.delete(`${SERVER_URL}/adoption-requests/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                 },
             });
 
@@ -137,7 +137,7 @@ const Dashboard = () => {
                         { animalId: request.animalId },
                         {
                             headers: {
-                                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                             },
                         }
                     );

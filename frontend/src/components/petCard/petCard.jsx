@@ -50,7 +50,7 @@ const PetCard = ({
 }) => {
     const navigate = useNavigate();
     const [openNotifyModal, setOpenNotifyModal] = useState(false);
-    const isAuthenticated = Boolean(localStorage.getItem("token"));
+    const isAuthenticated = Boolean(sessionStorage.getItem("token"));
 
     const handleMoreClick = () => {
         if (
@@ -79,7 +79,7 @@ const PetCard = ({
         try {
             await axios.delete(`${SERVER_URL}/pets/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 }
             });
 

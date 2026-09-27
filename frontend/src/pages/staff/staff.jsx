@@ -17,11 +17,11 @@ const Staff = () => {
     const [openModal, setOpenModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const navigate = useNavigate();
-    const currentUserId = localStorage.getItem("id");
+    const currentUserId = sessionStorage.getItem("id");
     const itemsPerPage = 8;
 
     useEffect(() => {
-        const role = localStorage.getItem("role");
+        const role = sessionStorage.getItem("role");
         if (role !== EMPLOYEE_ROLES.ADMIN) {
             navigate("*");
             return;
@@ -58,7 +58,7 @@ const Staff = () => {
     }, [applyFilters]);
 
     const fetchEmployees = () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
 
         axios.get(`${SERVER_URL}/employees`, {
             headers: {
@@ -79,7 +79,7 @@ const Staff = () => {
 
     const handleDelete = async (id) => {
         try {
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
 
             if (id.toString() === currentUserId?.toString()) {
                 alert("Nu poți șterge propriul cont.");

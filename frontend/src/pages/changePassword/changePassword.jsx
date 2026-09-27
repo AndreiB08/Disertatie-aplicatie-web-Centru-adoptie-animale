@@ -28,7 +28,7 @@ const ChangePassword = () => {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
 
         if (!token) {
             setError("Sesiunea a expirat. Te rugăm să te autentifici din nou.");

@@ -20,18 +20,18 @@ import "./navbar.css";
 const NavBar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const isAuthenticated = !!localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const isAuthenticated = !!sessionStorage.getItem("token");
+  const role = sessionStorage.getItem("role");
 
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("id");
-    localStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("id");
+    sessionStorage.removeItem("isAuthenticated");
     navigate("/");
     window.location.reload();
   };

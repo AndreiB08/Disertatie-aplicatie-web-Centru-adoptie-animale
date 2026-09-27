@@ -33,7 +33,7 @@ const Pets = () => {
     const [openPetModal, setOpenPetModal] = useState(false);
     const [selectedPet, setSelectedPet] = useState(null);
 
-    const isAuthenticated = Boolean(localStorage.getItem("token"));
+    const isAuthenticated = Boolean(sessionStorage.getItem("token"));
 
     const fetchPets = useCallback(() => {
         axios
