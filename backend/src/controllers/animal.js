@@ -3,6 +3,24 @@ import { validate as isUUID, v4 as uuidv4 } from "uuid";
 
 const animalsCollection = db.collection("animals");
 
+const adoptionRequestsCollection = db.collection("adoption_requests");
+const notificationRequestsCollection = db.collection("notification_requests");
+
+const deleteDocumentsInBatches = async (documents) => {
+    const BATCH_SIZE = 500;
+
+    for (let i = 0; i < documents.length; i += BATCH_SIZE) {
+        const batch = db.batch();
+        const batchDocuments = documents.slice(i, i + BATCH_SIZE);
+
+        batchDocuments.forEach(doc => {
+            batch.delete(doc.ref);
+        });
+
+        await batch.commit();
+    }
+};
+
 const uploadImage = async (file, animalId) => {
     if (!file) {
         return null;
@@ -340,14 +358,42 @@ export const deleteAnimal = async (req, res) => {
 
         const animal = animalSnapshot.data();
 
+        // Găsim toate cererile asociate animalului
+        const [
+            adoptionRequestsSnapshot,
+            notificationRequestsSnapshot
+        ] = await Promise.all([
+            adoptionRequestsCollection
+                .where("animalId", "==", id)
+                .get(),
+
+            notificationRequestsCollection
+                .where("animalId", "==", id)
+                .get()
+        ]);
+
+        // Ștergem cererile de adopție
+        await deleteDocumentsInBatches(
+            adoptionRequestsSnapshot.docs
+        );
+
+        // Ștergem cererile de notificare
+        await deleteDocumentsInBatches(
+            notificationRequestsSnapshot.docs
+        );
+
+        // Ștergem imaginea din Firebase Storage
         if (animal.imagePath) {
             await deleteImage(animal.imagePath);
         }
 
+        // Ștergem animalul din Firestore
         await animalRef.delete();
 
         res.status(200).json({
-            message: `Animal with ID ${id} deleted successfully`
+            message: `Animal with ID ${id} deleted successfully`,
+            deletedAdoptionRequests: adoptionRequestsSnapshot.size,
+            deletedNotificationRequests: notificationRequestsSnapshot.size
         });
     } catch (err) {
         console.error("Error deleting animal:", err);
