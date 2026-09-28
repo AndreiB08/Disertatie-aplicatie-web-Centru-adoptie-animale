@@ -94,7 +94,7 @@ const PetModal = ({ open, handleClose, onSaved, initialData = null }) => {
                 formData.append("image", form.image);
             }
 
-            const token = localStorsessionStorageage.getItem("token");
+            const token = sessionStorage.getItem("token");
 
             if (initialData && initialData.id) {
                 await axios.put(
