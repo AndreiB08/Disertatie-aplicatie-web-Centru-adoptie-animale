@@ -1,6 +1,6 @@
 # Aplicație Web - Centru de Adopție Animale
 
-Această aplicație este realizată ca lucrare de licență și reprezintă o aplicație web pentru gestionarea unui centru de adopții de animale.
+Această aplicație este realizată ca lucrare de disertatie și reprezintă o aplicație web pentru gestionarea unui centru de adopții de animale.
 
 ---
 
@@ -70,20 +70,6 @@ npm run dev
 ```
 
 ---
-
-## Date de test
-
-```txt
-Admin:
-email: andrei.buzagiu@gmail.com
-parola: admin1234
-
-Staff:
-email: andrei2.buzagiu@gmail.com
-parola: staff1234
-```
-
-> Se pot schimba din interfață.
 
 ### 4. Paginile pentru staff
 
